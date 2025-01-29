@@ -15,6 +15,16 @@ def view_all_users() -> str:
     all_users = [user.to_json() for user in User.all()]
     return jsonify(all_users)
 
+@app_views.route('/users/me', methods=['GET'], strict_slashes=False)
+def view_me()-> str:
+    """Get /api/v1/users
+    Return:
+    - list of me
+    """
+    if request.current_user is None:
+        abort(404)
+    return jsonify(request.current_user.to_json())
+
 
 @app_views.route('/users/<user_id>', methods=['GET'], strict_slashes=False)
 def view_one_user(user_id: str = None) -> str:
@@ -30,7 +40,12 @@ def view_one_user(user_id: str = None) -> str:
     user = User.get(user_id)
     if user is None:
         abort(404)
-    return jsonify(user.to_json())
+    if user_id == 'me' and request.current_user is None:
+        abort(404)
+    if user_id == 'me' and request.current_user != None:
+        return jsonify(request.current_user.to_json())
+    else:
+        return jsonify(user.to_json())
 
 
 @app_views.route('/users/<user_id>', methods=['DELETE'], strict_slashes=False)

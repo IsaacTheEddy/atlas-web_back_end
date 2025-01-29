@@ -50,6 +50,7 @@ def before_requ():
         return
     if request.path in ERRORs:
         return
+    request.current_user = auth.current_user(request)
     if auth.require_auth(request.path, ERRORs) and request.path not in ERRORs:
         if auth.authorization_header(request) is None:
             abort(401)
