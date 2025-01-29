@@ -5,12 +5,12 @@ from api.v1.auth.auth import Auth
 import os
 import uuid
 
+
 class SessionAuth(Auth):
     """Session Auth class that inheirts
     from Auth class"""
     def __init__(self):
         super().__init__()
-
 
     user_id_by_session_id = {}
 
