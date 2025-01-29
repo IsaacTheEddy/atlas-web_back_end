@@ -6,6 +6,7 @@
 
 from flask import request
 from typing import List
+import os
 
 
 class Auth():
@@ -45,3 +46,10 @@ class Auth():
     def current_user(self, request=None) -> str:
         """Returns None with the flask request object"""
         return None
+
+    def session_cookie(self, request=None):
+        """Returns a cookie value from a rquest"""
+        session_name = os.getenv("SESSION_NAME")
+        if request is None:
+            return None
+        return request.cookies.get(session_name)
