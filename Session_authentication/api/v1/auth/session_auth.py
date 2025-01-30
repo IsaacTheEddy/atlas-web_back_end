@@ -34,7 +34,6 @@ class SessionAuth(Auth):
     def current_user(self, request=None):
         """Overload that returns a cookie value"""
         sess_name = self.session_cookie(request)
-
         user_id = self.user_id_for_session_id(sess_name)
         user = User.get(user_id)
         print(user)
