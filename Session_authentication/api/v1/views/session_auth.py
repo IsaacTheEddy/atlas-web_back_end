@@ -21,7 +21,7 @@ def session_login(email: str=None, password: str=None) -> str:
     for user in users:
         if user.is_valid_password(password):
             from api.v1.app import auth
-            session_id = auth.create_session(user.email)
+            session_id = str(auth.create_session(user.email))
             result = jsonify(user.to_json())
             result.set_cookie(str(os.getenv("SESSION_NAME")), session_id)
             return result
