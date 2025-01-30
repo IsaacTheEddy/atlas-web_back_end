@@ -4,6 +4,7 @@ class"""
 from api.v1.auth.auth import Auth
 import os
 import uuid
+from models.user import User
 
 
 class SessionAuth(Auth):
@@ -29,3 +30,18 @@ class SessionAuth(Auth):
         if session_id is None or not isinstance(session_id, str):
             return None
         return self.user_id_by_session_id.get(session_id)
+
+    def current_user(self, request=None):
+        """Overload that returns a cookie value"""
+        sess_name = self.session_cookie(request)
+
+        user_id = self.user_id_for_session_id(sess_name)
+        user = User.get(user_id)
+        print(user)
+        return user
+
+
+
+
+
+
