@@ -18,3 +18,14 @@ class TestAccessNestedMap(unittest.TestCase):
         """This will test access.tested_maps methodfrom utils.py"""
         self.assertEqual(access_nested_map(nested_map=param1, path=param2), expectedResult)
 
+
+    @parameterized.expand([
+        ({}, ("a",)),
+        ({"a": 1}, {"a", "b"})
+        ])
+    def test_access_nested_map_exception(self, param1, param2,):
+        """This will test for and Report Key Errors for the
+        access method Class"""
+        with self.assertRaises(expected_exception=KeyError):
+            access_nested_map(nested_map=param1, path=param2)
+
