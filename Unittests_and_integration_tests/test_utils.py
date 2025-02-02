@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 """This is my test module for Utils.py"""
-from utils import access_nested_map
-from parameterized import parameterized
 import unittest
-from unittest import mock
+from unittest.mock import patch, Mock
+from utils import access_nested_map, get_json
+from parameterized import parameterized
+import json
+
+
+import requests
 
 class TestAccessNestedMap(unittest.TestCase):
     """This class is used for Utils.py Test Cases"""
@@ -29,3 +33,19 @@ class TestAccessNestedMap(unittest.TestCase):
         with self.assertRaises(expected_exception=KeyError):
             access_nested_map(nested_map=param1, path=param2)
 
+class TestGetJson(unittest.TestCase):
+    """Test class is used for Utils.py GetJson Cases"""
+
+    @parameterized.expand([
+        ('http://example.com', {'payload': True}),
+        ('http://holberton.io', {'payload': False}),
+    ])
+    def test_get_json(self, param, expectedResult):
+        '''This should mock requests. get and assert if
+        the call is made once'''
+        mock = Mock()
+        mock.json.return_value = expectedResult
+        with patch('requests.get') as mock_get:
+            mock_get.return_value = mock
+            self.assertEqual(get_json(param), expectedResult)
+            mock_get.assert_called_once_with(param)
