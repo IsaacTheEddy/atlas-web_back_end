@@ -20,3 +20,8 @@ class TestGithubOrgClient(unittest.TestCase):
         test.org
         mock_get.assert_called_once_with(
             f"https://api.github.com/orgs/{param}")
+
+    @patch('client.get_json')
+    def test_public_repos_url(self, mock_public):
+        """Mocks the property method"""
+
