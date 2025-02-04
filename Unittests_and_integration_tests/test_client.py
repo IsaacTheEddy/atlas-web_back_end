@@ -41,3 +41,11 @@ class TestGithubOrgClient(unittest.TestCase):
             mock_prop.return_value = 'https://api.github.com/orgs/google/repos'
             results = test.public_repos()
             self.assertEqual(results, ["money, money", "moneeye"])
+
+    @parameterized.expand([({"license": {"key": "my_license"}},"my_license", True),
+                           ({"license": {"key": "other_license"}},"my_license", False)])
+    def test_has_license(self, param1, param2, expectedResult):
+        """Test if user has license"""
+        test = GithubOrgClient("google")
+        result = test.has_license(param1, param2)
+        self.assertEqual(result, expectedResult)
