@@ -74,3 +74,5 @@ class TestMemoize(unittest.TestCase):
             self.assertEqual(run1, 42)
             self.assertEqual(run, 42)
             mock_a.assert_called_once()
+
+
