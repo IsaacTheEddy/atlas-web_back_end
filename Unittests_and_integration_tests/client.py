@@ -59,4 +59,4 @@ class GithubOrgClient:
 
 if __name__ == "__main__":
     client = GithubOrgClient("google")
-    print(client._public_repos_url)
+    print(client.org)
