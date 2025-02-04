@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """This module is for testing the clients modules"""
 import unittest
-from unittest.mock import patch, Mock
+from unittest.mock import patch, Mock, PropertyMock
 from parameterized import parameterized
 from client import GithubOrgClient
 
@@ -21,7 +21,12 @@ class TestGithubOrgClient(unittest.TestCase):
         mock_get.assert_called_once_with(
             f"https://api.github.com/orgs/{param}")
 
-    @patch('client.get_json')
-    def test_public_repos_url(self, mock_public):
+    @patch("client.GithubOrgClient.org", new_callable=PropertyMock)
+    def test_public_repos_url(self, mock_get):
         """Mocks the property method"""
+        mock_get.return_value = {'repos_url': 'https://api.github.com/orgs/google/repos'}
+        test = GithubOrgClient('google')
+        test.org
+        results = test._public_repos_url
+        self.assertEqual(results, 'https://api.github.com/orgs/google/repos')
 
