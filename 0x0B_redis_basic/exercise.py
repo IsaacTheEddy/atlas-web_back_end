@@ -28,6 +28,7 @@ def count_calls(method: Callable) -> Callable:
         return method(self, *args, **kwargs)
     return wrapper
 
+
 def call_history(method: Callable) -> Callable:
     """
     This will store the history of inputs and outputs
@@ -80,14 +81,14 @@ class Cache:
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn: Optional[Callable[[bytes], Union[str, int]]] = None
-                ) -> Optional[Union[str, int]]:
+    def get(self, key: str, fn: Optional[Callable] = None) -> str:
         """
         Retrieve data from Redis and optionally apply a conversion function.
 
         Args:
         key (str) the key name for Redis
-        fn Optional[Callable[[bytes], Union[str, int]]] an optional function to be called
+        fn Optional[Callable[[bytes], Union[str, int]]]
+          an optional function to be called
         if the value passed isnt a string
         Returns:
         None
@@ -100,7 +101,6 @@ class Cache:
         if fn is not None:
             return fn(value)
         return value
-
 
     def get_str(self, key: str) -> str:
         """
@@ -115,7 +115,7 @@ class Cache:
         return self.get(key, lambda x: x.decode('utf-8'))
 
     def get_int(self, key: str) -> int:
-            """
+        """
         Gets the Int value from Redis
 
         Args:
@@ -124,7 +124,8 @@ class Cache:
         Returns:
         int: the string representation of the key: value
         """
-            return self.get(key, lambda x: int(x))
+        return self.get(key, lambda x: int(x))
+
 
 def replay(method: Callable) -> None:
     """ Formats all teh data collection for display purposes
