@@ -1,6 +1,7 @@
--- List all brands with glam rock as the main style
+-- Queries for style as band name
+-- and order by longevity
 SELECT band_name,
-    SUM(COALESCE(split, YEAR(CURDATE())) - formed) AS lifespan
+    SUM(COALESCE(split, YEAR(CURDATE()) - 1) - formed) AS lifespan
 FROM metal_bands
 WHERE style LIKE '%Glam rock%'
 GROUP BY band_name
