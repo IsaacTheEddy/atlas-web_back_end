@@ -5,7 +5,7 @@ from functools import wraps
 from typing import Union, Callable, Optional
 
 
-def count_calls(method: Callable) -> callable:
+def count_calls(method: Callable) -> Callable:
     """
     Will keep track of how many calls are made to
     the cache class
