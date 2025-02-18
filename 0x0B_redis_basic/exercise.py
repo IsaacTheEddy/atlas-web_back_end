@@ -1,30 +1,46 @@
+#!/usr/bin/env python3
 import redis
 import uuid
 from typing import Union, Callable, Optional
 
+
 class Cache:
+    """Cache class to inherit with Redis."""
+
     def __init__(self):
+        """Initialize Redis connection and flush database."""
         self._redis = redis.Redis()
         self._redis.flushdb()
 
     def store(self, data: Union[str, bytes, int, float]) -> str:
+        """
+        Store data in Redis with a randomly genereated key.
+
+        Args:
+            data (Union[str, bytes, int, float]): The data to store in Redis.
+
+        Returns:
+            str: They key under which the data is stored.
+        """
         key = str(uuid.uuid4())
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn: Callable = None) -> Union[bytes, str, int, float, None]:
-        data = self._redis.get(key)
-        if data is None:
+    def get(self, key: str, fn: Optional[Callable[[bytes], Union[str, int]]] = None
+                ) -> Optional[Union[str, int]]:
+        """ Retrieve data from Redis and optionally apply a conversion function.
+        """
+        value = self._redis.get(key)
+
+        if value is None:
             return None
-        if isinstance(data, bytes):
-            try:
-                return fn(int(data)) if callable(fn) else int(data)
-            except ValueError:
-                return fn(data) if callable(fn) else data
-        return fn(data) if callable(fn) else data
+        if fn is not None:
+            return fn(value)
+        return value
 
-    def get_str(self, key: str) -> Optional[str]:
-        return self.get(key)
 
-    def get_int(self, key: str) -> Optional[int]:
-        return self.get(key)
+    def get_str(self, key: str) -> str:
+        return self.get(key, lambda x: x.decode('utf-8'))
+
+    def get_int(self, key: str) -> int:
+        return self.get(key, lambda x: int(x))
