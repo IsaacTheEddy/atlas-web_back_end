@@ -28,7 +28,7 @@ class Cache:
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn: Callable) -> str:
+    def get(self, key: str, fn: Optional[Callable[[bytes], Union[str, int]]]) -> None:
         """This will get whatever is pulled from redis"""
         data = self._redis.get(key)
         if data is None:
@@ -41,5 +41,5 @@ class Cache:
     def get_str(self, key: str) -> str:
         return self.get(key, lambda x: x.decode('utf-8'))
 
-    def get_int(self, key: str) -> str:
+    def get_int(self, key: str) -> int:
         return self.get(key, lambda x: int(x))
