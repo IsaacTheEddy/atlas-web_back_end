@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""THis is a Cache class using Redis as the main
+database
+"""
 import redis
 import uuid
 from functools import wraps
