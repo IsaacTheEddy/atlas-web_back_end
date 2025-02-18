@@ -2,7 +2,8 @@
 import redis
 import uuid
 from typing import Union, Callable, Optional
-import functools
+import redis.cache
+import redis.client
 
 
 class Cache:
@@ -26,3 +27,18 @@ class Cache:
         key = str(uuid.uuid4())
         self._redis.set(key, data)
         return key
+
+    def get(self, key: str, fn: Callable) -> str:
+        """This will get whatever is pulled from redis"""
+        data = self._redis.get(key)
+        if data is None:
+            return None
+        if fn:
+            return fn(data)
+        return data
+
+    def get_str(self, key: str) -> str:
+        return self.get(key)
+
+    def get_int(self, key: str) -> str:
+        return self.get(int(key))
