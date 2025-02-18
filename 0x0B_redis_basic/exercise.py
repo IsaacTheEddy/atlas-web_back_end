@@ -35,7 +35,8 @@ class Cache:
             return None
         if fn:
             return fn(data)
-        return data
+        else:
+            return ValueError
 
 
     def get_str(self, key: str) -> str:
