@@ -123,4 +123,26 @@ class Cache:
         """
             return self.get(key, lambda x: int(x))
 
+    def replay(method: Callable) -> None:
+        """
+        Displays all the data
+
+        Args:
+        method (Callable) The function wrapped
+
+        """
+        method_name = method.__qualname__
+        count_key = method_name
+        inputs = f"{method.__qualname__}:inputs"
+        outputs = f"{method.__qualname__}:outputs"
+
+        count = method.__self__._redis.get(count_key)
+        input_list = method.__self__._redis.lrange(inputs, 0, -1)
+        output_list = method.__self__._redis.lrange(outputs, 0, -1)
+
+        print(f"{method_name} was called {int(count)} times:")
+        for input_str, output_str in zip(input_list, output_list):
+            print(f"{method_name}(*{input_str.decode('utf-8')}) ->\
+                  {output_str.decode('utf-8')}")
+
 
