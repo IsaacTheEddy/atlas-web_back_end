@@ -14,5 +14,5 @@ VALUES (project_name);
 set project_id = LAST_INSERT_ID();
 END IF;
 INSERT INTO corrections (user_id, project_id, score)
-VALUES (user_id, project_id, score, 'bonus');
+VALUES (user_id, project_id, score);
 END;
