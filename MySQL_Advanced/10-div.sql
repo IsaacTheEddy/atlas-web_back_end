@@ -5,4 +5,4 @@ BEGIN IF b = 0 THEN RETURN 0;
 ELSE RETURN a / b;
 -- Or CAST(a AS DECIMAL(10,2)) / b for more control
 END IF;
-END
+END;
