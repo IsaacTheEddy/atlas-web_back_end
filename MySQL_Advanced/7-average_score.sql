@@ -1,0 +1,1 @@
+-- Creats a procedure for average score user
