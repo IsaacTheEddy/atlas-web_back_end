@@ -1,10 +1,8 @@
 -- divided and returns the first number by the second number and returns
 CREATE FUNCTION SafeDiv(a INT, b INT) RETURNS FLOAT BEGIN
 DECLARE result FLOAT;
-IF b = 0 THEN
-SET result = 0;
+IF b = 0 THEN RETURN 0;
 ELSE
-SET result = a / b;
+SET RETURN a / b;
 END IF;
-RETURN result;
 END;
