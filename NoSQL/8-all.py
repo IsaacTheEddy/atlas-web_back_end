@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-from typing import List
-from pymongo import mongo_client
 """
 Lists all the documents in a collection
 """
+from typing import List
+from pymongo import mongo_client
 
 
 def list_all(mongo_collection: str) -> List[str]:
