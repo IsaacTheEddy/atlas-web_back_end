@@ -1,5 +1,5 @@
 -- Creates a procedure to update a project score with user_id
-DELIMITER // CREATE PROCEDURE AddBonus(
+CREATE PROCEDURE AddBonus(
     IN user_id INT,
     IN project_name VARCHAR(255),
     IN score INT
@@ -15,4 +15,4 @@ set project_id = LAST_INSERT_ID();
 END IF;
 INSERT INTO corrections (user_id, project_id, score)
 VALUES (user_id, project_id, score);
-END // DELIMITER;
+END
