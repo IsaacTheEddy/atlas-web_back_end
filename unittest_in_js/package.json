@@ -1,8 +1,22 @@
 {
+    "name": "unittests_in_js",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
     "scripts": {
-        "test": "./node_modules/mocha/bin/mocha --require babel-register --exit"
+        "test": "mocha",
+        "lint": "./node_modules/.bin/eslint",
+        "check-lint": "lint [0-9]*.js"
     },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
     "devDependencies": {
-        "mocha": "^11.1.0"
-    }
+        "chai": "^5.1.1",
+        "chai-as-promised": "^8.0.0",
+        "mocha": "^10.7.3",
+        "sinon": "^19.0.2",
+        "supertest": "^7.0.0"
+    },
+    "type" : "module"
 }
