@@ -9,8 +9,10 @@ function calculateNumber(type, a, b) {
     if (type === "DIVIDE"){
         if (b === 0){
             return ("Error")
+        }else{
+            return Math.round(a) / Math.round(b);
         }
-        return Math.round(a) / Math.round(b);
+
     }
 }
 
