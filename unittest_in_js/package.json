@@ -1,0 +1,8 @@
+{
+    "scripts": {
+        "test": "./node_modules/mocha/bin/mocha --require babel-register --exit"
+    },
+    "devDependencies": {
+        "mocha": "^11.1.0"
+    }
+}
