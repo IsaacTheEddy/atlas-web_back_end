@@ -12,6 +12,7 @@ const Utils = {
             }
             return Math.round(a) / Math.round(b);
         }
+        console.log("The ")
     }
 }
 module.exports = Utils;
