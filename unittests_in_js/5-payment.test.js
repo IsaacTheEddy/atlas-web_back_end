@@ -1,0 +1,35 @@
+const sinon = require("sinon");
+const chai = require("chai")
+const assert = require('assert');
+const Utils = require("./utils")
+const sendPaymentRequestToApi = require("./5-payment")
+const {expect} = chai
+
+describe("sendPaymentRequestToApi", () => {
+    it("Calls Utils.calculateNumbers with Type(SUM) and 100 and 20", ()=>{
+        const spy = sinon.spy(console, 'log');
+
+        sendPaymentRequestToApi(100, 20);
+
+        assert.strictEqual(spy.callCount, 1);
+        assert.strictEqual(spy.getCall(0).args[0], "The total is: 120");
+
+        spy.restore();
+    });
+    it("Calls Utils.calculateNumbers with Type(SUM) and 10 and 10", ()=>{
+        const spy = sinon.spy(console, 'log');
+
+        sendPaymentRequestToApi(10, 10);
+
+        assert.strictEqual(spy.callCount, 1);
+        assert.strictEqual(spy.getCall(0).args[0], "The total is: 20");
+
+        spy.restore();
+    });
+    // it("Calls Utils.calculateNumbers with Type(SUM) and 10 and 10", ()=>{
+    //     sendPaymentRequestToApi(10, 10);
+    //     console.log(`The result is: ${result}`)
+    //     expect(console.log.calledOnce).to.be.true
+    //     spy.restore();
+    // });
+});
