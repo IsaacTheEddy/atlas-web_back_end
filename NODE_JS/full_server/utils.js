@@ -1,12 +1,8 @@
-import express from "express"
-import http from "node:http"
-import { promisify } from "node:util"
 import * as fs from "node:fs"
-
-const app = express()
-const port = 1245
+import { promisify } from "node:util"
 
 const readFileAsync = promisify(fs.readFile)
+const database = process.argv[2]
 
 export async function countStudents(path) {
     return new Promise((resolve, reject) => {
@@ -39,19 +35,11 @@ export async function countStudents(path) {
                     SWE_students["List"].push(" " + sum[0])
                 }
             });
-            resolve((`NUmber of students: ${(n_o_s)}
-        \rNumber of students in CS: ${CS_students["CS"]}. List: ${CS_students["List"]}
-        \rNumber of students in SWE: ${SWE_students["SWE"]}. List: ${SWE_students["List"]}`)
-        )})
+            resolve({Number_of_students: n_o_s,
+            CS_students: CS_students,
+            SWE_students: SWE_students
+            })
+        });
     })
 }
 
-app.get("/", (req, res) => {
-    res.end("Hello Holberton School")
-}).listen(port)
-
-app.get("/students", async (req,res) => {
-    const database = process.argv[2]
-    const results = await countStudents(database)
-    res.end(`This is the list of students\n${results}`)
-})
