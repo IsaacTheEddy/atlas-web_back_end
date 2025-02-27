@@ -1,14 +1,16 @@
- function calculateNumber(a, b, type) {
-    a = Math.round(a)
-    b = Math.round(b)
+function calculateNumber(type, a, b) {
+
     if (type === "SUM"){
-        return a + b
+        return Math.round(a) + Math.round(b);
     }
     if (type === "SUBTRACT"){
-        return a - b;
+        return Math.round(a) - Math.round(b);
     }
     if (type === "DIVIDE"){
-        return a / b;
+        if (a === 0 || b === 0){
+            return ("Error")
+        }
+        return Math.round(a) / Math.round(b);
     }
     else{
         return ("Error")
