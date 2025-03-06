@@ -1,18 +1,22 @@
 const express = require("express")
 
 const app = express()
+app.use(express.json())
 const port = 7865
 
 app.get("/", (req,res) => {
     res.end("Welcome to the payment system")
 })
 
-app.get("/cart/:id", (req,res) => {
-    if (id === !isNaN){
-        console.log("")
+
+app.get('/cart/:id', (req, res) => {
+    const id = req.params.id;
+    if (!isNaN(id)) {
+        res.status(200).send(`Payment methods for cart ${id}`);
+    } else {
+        res.status(404).send('Cart not found');
     }
-    res.end("")
-})
+});
 
 app.get("/available_payments", (req, res) => {
     res.json({
@@ -23,13 +27,11 @@ app.get("/available_payments", (req, res) => {
     });
   });
 
-  app.post("/login", (req, res) => {
-    const { userName } = req.body;
-    if (!userName) {
-      return res.status(400).json({ error: "Username is required" });
-    }
-    res.json({ message: `Welcome :${userName}` });
+  app.post('/login', (req, res) => {
+    const userName = req.body.userName;
+    res.status(200).send(`Welcome ${userName}`)
   });
+
 
 app.listen(port, () => {
     console.log(`API available on localhost port ${port}`)
