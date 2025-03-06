@@ -1,38 +1,37 @@
-const request = require("request");
-const assert = require("assert");
+const { expect } = require('chai');
+const request = require('request');
 
-const url = "http://localhost:7865";
-
-describe("Index Page", () => {
-  it("should return status code 200", (done) => {
-    request(url, (error, response, body) => {
-      assert.strictEqual(response.statusCode, 200);
+describe('Tests index', function() {
+  it('returns the correct status code: 200', function(done) {
+    request('http://localhost:7865', function(error, response, body) {
+      expect(response.statusCode).to.equal(200);
       done();
     });
   });
 
-  it("should return the correct message", (done) => {
-    request(url, (error, response, body) => {
-      assert.strictEqual(body, "Welcome to the payment system");
-      done();
-    });
-  });
-});
 
-describe("Cart Page", () => {
-  it("should return status code 200 when id is a number", (done) => {
-    request(url + '/cart/123', (error, response, body) => {
-      assert.strictEqual(response.statusCode, 200);
-      done();
-    });
-  });
-
-  it("should return status code 404 when id is not a number", (done) => {
-    request(url + '/cart/abc', (error, response, body) => {
-      assert.strictEqual(response.statusCode, 404);
+  it('returns the correct console.log output', function(done) {
+    request('http://localhost:7865', function(error, response, body) {
+      expect(body).to.equal('Welcome to the payment system');
       done();
     });
   });
 });
 
+describe('Tests Cart Page', function() {
+  it('returns the correct status code: 200 if id is a number', function(done) {
+    request('http://localhost:7865/cart/42', function(error, response, body) {
 
+      expect(response.statusCode).to.equal(200);
+
+      expect(body).to.equal('Payment methods for cart 42');
+      done();
+    });
+  });
+  it('returns 404 if id is not a number', function(done) {
+    request('http://localhost:7865/cart/atlas', function(error, response, body) {
+      expect(response.statusCode).to.equal(404);
+      done();
+    });
+  });
+});
